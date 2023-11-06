@@ -1,28 +1,25 @@
-import { Command } from 'commander';
-import { debounce } from './debounce';
+import readline from 'readline';
+import { debounce } from './debounce'; // Asegúrate de que el archivo debounce.js esté en la misma carpeta
 
-const program = new Command();
+// Configura la interfaz de línea de comandos para la entrada del usuario
+const rl = readline.createInterface({
+  input: process.stdin,
+  output: process.stdout,
+});
 
-program
-  .version('1.0.0')
-  .description('CLI para simular una acción con debounce en TypeScript');
+// Crea una función que se ejecutará cuando el temporizador esté completo
+const onTimerDone = () => {
+  console.log('Timer is done!');
+  process.exit(0)
+};
 
-program
-  .command('action <delay> <message>')
-  .description('Ejecutar una acción después de un retraso personalizado')
-  .action((delay: string, message: string) => {
-    const delayMs = parseInt(delay);
-    const debouncedAction = debounce(() => {
-      console.log(`¡Acción ejecutada: ${message}`);
-    }, delayMs);
+// Crea una función debounced que ejecutará onTimerDone después de un retraso
+const debouncedOnTimerDone = debounce(onTimerDone, 1000); // El segundo argumento es el tiempo de espera en milisegundos
 
-    console.log(`Esperando ${delayMs} milisegundos antes de ejecutar la acción...`);
-    
-    // Iniciar el retraso y la acción
-    debouncedAction();
+// Escucha la entrada del usuario
+rl.on('line', (input) => {
+  console.log('Input received:', input);
+  debouncedOnTimerDone(); // Reinicia el temporizador cada vez que se recibe una entrada
+});
 
-  });
-
-program.parse(process.argv);
-
-//node .\cliDebounce.js  action 3000 "Mensaje de prueba"
+console.log('CLI is running. Enter number(1) to reset the timer.');
