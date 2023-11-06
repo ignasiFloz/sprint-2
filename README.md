@@ -14,6 +14,7 @@ Transpila el proyecto en dist/
 ```sh
 tsc
 ```
+EJERCICIO 1
 cliDebounce.ts
 
 ```sh
@@ -21,7 +22,7 @@ node .\cliDebounce.js
 ```
 utilizamos el numero 1 como llamada de la funcion. 
 
-
+EJERCICIO 2
 cliThrottle.ts
 
 ```sh
@@ -29,7 +30,7 @@ node .\cliThrottle.js
 ```
 presionamos el enter y escribimos numero el tiempo que queramos cuando concluyamos la consola apretando "F" mostrara los numero guardados en un intervalo de 1 segundo.
 
-
+EJERCICIO 3
 cliMemoize.ts
 
 ```sh
