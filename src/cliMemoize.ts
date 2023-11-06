@@ -2,13 +2,13 @@ import * as readline from 'readline';
 import { memoize } from './memoize';
 
 
-// Ejemplo de función para memoizar
-function square(x: number): number {
-  console.log('Calculating square of', x);
-  return x * x;
+function factorial(n: number): number {
+  console.log('Calculating factorial of', n);
+  if (n <= 1) return 1;
+  return n * factorial(n - 1);
 }
 
-const memoizedSquare = memoize(square);
+const memoizedFactorial = memoize(factorial);
 
 const rl = readline.createInterface({
   input: process.stdin,
@@ -16,16 +16,16 @@ const rl = readline.createInterface({
 });
 
 function runCLI() {
-  rl.question('Enter a number to calculate the square (q to quit): ', (input) => {
+  rl.question('Enter a number to calculate the factorial (q to quit): ', (input) => {
     if (input === 'q') {
       rl.close();
     } else {
       const number = parseFloat(input);
-      if (!isNaN(number)) {
-        const result = memoizedSquare(number);
-        console.log(`Square of ${number} is ${result}`);
+      if (!isNaN(number) && Number.isInteger(number) && number >= 0) {
+        const result = memoizedFactorial(number);
+        console.log(`Factorial of ${number} is ${result}`);
       } else {
-        console.log('Invalid input. Please enter a number.');
+        console.log('Invalid input. Please enter a non-negative integer.');
       }
       runCLI();
     }
